@@ -1,10 +1,20 @@
-import React from "react";
-import { SolutionLayout } from "../ui/solution-layout/solution-layout";
+import React, { Component } from 'react';
+import { SolutionLayout } from '../ui/solution-layout/solution-layout';
+import styles from './stack-page.module.css';
 
-export const StackPage: React.FC = () => {
-  return (
-    <SolutionLayout title="Стек">
+interface StackPageProps {}
 
-    </SolutionLayout>
-  );
-};
+interface StackPageState {}
+
+class StackPage extends Component<StackPageProps, StackPageState> {
+  render(): React.ReactNode {
+    return (
+      <SolutionLayout title="Стек">
+        <div className={styles.inputBlock}></div>
+        <div className={styles.stackBlock}></div>
+      </SolutionLayout>
+    );
+  }
+}
+
+export default StackPage;

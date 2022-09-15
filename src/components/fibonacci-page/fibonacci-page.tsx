@@ -5,13 +5,13 @@ import { Input } from '../ui/input/input';
 import { SolutionLayout } from '../ui/solution-layout/solution-layout';
 import styles from './fibonacci-page.module.css';
 
-type FibonacciPageProps = {};
+interface FibonacciPageProps {}
 
-type FibonacciPageState = {
+interface FibonacciPageState {
   input: number;
   started: boolean;
   sequence: number[];
-};
+}
 
 class FibonacciPage extends Component<FibonacciPageProps, FibonacciPageState> {
   constructor(props: FibonacciPageProps) {

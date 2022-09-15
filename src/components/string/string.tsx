@@ -6,15 +6,15 @@ import { Input } from '../ui/input/input';
 import { SolutionLayout } from '../ui/solution-layout/solution-layout';
 import styles from './string.module.css';
 
-type StringComponentProps = {};
+interface StringComponentProps {}
 
-type StringComponentState = {
+interface StringComponentState {
   input: string;
   started: boolean;
   changedIndexes: number[];
   startPointer: number;
   endPointer: number;
-};
+}
 
 class StringComponent extends Component<StringComponentProps, StringComponentState> {
   constructor(props: StringComponentProps) {

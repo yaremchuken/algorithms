@@ -1,10 +1,20 @@
-import React from "react";
-import { SolutionLayout } from "../ui/solution-layout/solution-layout";
+import React, { Component } from 'react';
+import { SolutionLayout } from '../ui/solution-layout/solution-layout';
+import styles from './sorting-page.module.css';
 
-export const SortingPage: React.FC = () => {
-  return (
-    <SolutionLayout title="Сортировка массива">
+interface SortingPageProps {}
 
-    </SolutionLayout>
-  );
-};
+interface SortingPageState {}
+
+class SortingPage extends Component<SortingPageProps, SortingPageState> {
+  render(): React.ReactNode {
+    return (
+      <SolutionLayout title="Сортировка массива">
+        <div className={styles.inputBlock}></div>
+        <div className={styles.sortingBlock}></div>
+      </SolutionLayout>
+    );
+  }
+}
+
+export default SortingPage;
