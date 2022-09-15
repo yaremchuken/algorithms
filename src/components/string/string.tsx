@@ -10,7 +10,7 @@ type StringComponentProps = {};
 
 type StringComponentState = {
   input: string;
-  reverseStarted: boolean;
+  started: boolean;
   changedIndexes: number[];
   startPointer: number;
   endPointer: number;
@@ -21,7 +21,7 @@ class StringComponent extends Component<StringComponentProps, StringComponentSta
     super(props);
     this.state = {
       input: '',
-      reverseStarted: false,
+      started: false,
       changedIndexes: [],
       startPointer: 0,
       endPointer: 0,
@@ -30,7 +30,7 @@ class StringComponent extends Component<StringComponentProps, StringComponentSta
 
   onInput = (e: FormEvent<HTMLInputElement>) => {
     this.setState({
-      reverseStarted: false,
+      started: false,
       input: e.currentTarget.value,
       changedIndexes: [],
       startPointer: 0,
@@ -38,16 +38,18 @@ class StringComponent extends Component<StringComponentProps, StringComponentSta
     });
   };
 
-  onPressReverse = () => {
-    this.setState({
-      reverseStarted: true,
-    });
-    this.doReverse();
+  onPressStart = () => {
+    this.setState(
+      {
+        started: true,
+      },
+      this.processReverse
+    );
   };
 
-  doReverse = () => {
+  processReverse = () => {
     setTimeout(() => {
-      if (!this.state.reverseStarted) return;
+      if (!this.state.started) return;
       this.setState(
         (state) => {
           return {
@@ -60,10 +62,10 @@ class StringComponent extends Component<StringComponentProps, StringComponentSta
         },
         () => {
           if (this.state.startPointer <= this.state.endPointer) {
-            this.doReverse();
+            this.processReverse();
           } else {
             this.setState({
-              reverseStarted: false,
+              started: false,
             });
           }
         }
@@ -84,11 +86,7 @@ class StringComponent extends Component<StringComponentProps, StringComponentSta
       <SolutionLayout title="Строка">
         <div className={styles.inputBlock}>
           <Input maxLength={11} isLimitText onInput={this.onInput} />
-          <Button
-            text="Развернуть"
-            isLoader={this.state.reverseStarted}
-            onClick={this.onPressReverse}
-          />
+          <Button text="Развернуть" isLoader={this.state.started} onClick={this.onPressStart} />
         </div>
         <div className={styles.reverseBlock}>
           {this.state.input.split('').map((v, idx) => (
@@ -98,7 +96,7 @@ class StringComponent extends Component<StringComponentProps, StringComponentSta
               state={
                 this.state.changedIndexes.includes(idx)
                   ? ElementStates.Modified
-                  : this.state.reverseStarted &&
+                  : this.state.started &&
                     (idx === this.state.startPointer || idx === this.state.endPointer)
                   ? ElementStates.Changing
                   : ElementStates.Default
