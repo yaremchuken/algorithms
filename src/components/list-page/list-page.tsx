@@ -7,6 +7,11 @@ interface ListPageProps {}
 interface ListPageState {}
 
 class ListPage extends Component<ListPageProps, ListPageState> {
+  constructor(props: ListPageProps) {
+    super(props);
+    this.state = {};
+  }
+
   render(): React.ReactNode {
     return (
       <SolutionLayout title="Связный список">

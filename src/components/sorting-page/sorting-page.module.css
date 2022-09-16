@@ -1,15 +1,28 @@
 .inputBlock {
   margin: 0 auto;
-  max-width: 522px;
   display: flex;
-  gap: 12px;
+  gap: 80px;
+  justify-content: center;
+  align-items: center;
 }
 
 .sortingBlock {
+  min-height: 340px;
   margin: 0 auto;
-  padding-top: 120px;
+  padding-top: 80px;
   display: flex;
   gap: 12px;
   justify-content: center;
+  align-items: flex-end;
   transition: all 1s ease-out;
+}
+
+.radios {
+  display: flex;
+  gap: 46px;
+}
+
+.sortChoose {
+  display: flex;
+  gap: 12px;
 }

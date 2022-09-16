@@ -7,6 +7,11 @@ interface QueuePageProps {}
 interface QueuePageState {}
 
 class QueuePage extends Component<QueuePageProps, QueuePageState> {
+  constructor(props: QueuePageProps) {
+    super(props);
+    this.state = {};
+  }
+
   render(): React.ReactNode {
     return (
       <SolutionLayout title="Очередь">

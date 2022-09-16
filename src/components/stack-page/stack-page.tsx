@@ -7,6 +7,11 @@ interface StackPageProps {}
 interface StackPageState {}
 
 class StackPage extends Component<StackPageProps, StackPageState> {
+  constructor(props: StackPageProps) {
+    super(props);
+    this.state = {};
+  }
+
   render(): React.ReactNode {
     return (
       <SolutionLayout title="Стек">
