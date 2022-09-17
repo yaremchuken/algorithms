@@ -3,7 +3,6 @@ interface IStack<T> {
   pop: () => void;
   peak: () => T | null;
   getSize: () => number;
-  map<U>(callbackfn: (value: T, index: number, array: T[]) => U): U[];
 }
 
 export class Stack<T> implements IStack<T> {

@@ -175,7 +175,8 @@ class SortingPage extends Component<SortingPageProps, SortingPageState> {
   };
 
   render(): React.ReactNode {
-    const { started, sortType, sortedTill, array, currPointer, comparePointer } = this.state;
+    const { started, sortType, sortDirection, sortedTill, array, currPointer, comparePointer } =
+      this.state;
 
     return (
       <SolutionLayout title="Сортировка массива">
@@ -185,11 +186,13 @@ class SortingPage extends Component<SortingPageProps, SortingPageState> {
               label="Выбор"
               checked={sortType === 'choice'}
               onChange={() => this.switchSortingType('choice')}
+              disabled={started}
             />
             <RadioInput
               label="Пузырёк"
               checked={sortType === 'bubble'}
               onChange={() => this.switchSortingType('bubble')}
+              disabled={started}
             />
           </div>
           <div className={styles.sortChoose}>
@@ -199,7 +202,8 @@ class SortingPage extends Component<SortingPageProps, SortingPageState> {
               onClick={() => {
                 this.onSortingChosed(Direction.Ascending);
               }}
-              isLoader={started}
+              isLoader={started && sortDirection === Direction.Ascending}
+              disabled={started && sortDirection === Direction.Descending}
             />
             <Button
               text="По убыванию"
@@ -207,10 +211,11 @@ class SortingPage extends Component<SortingPageProps, SortingPageState> {
               onClick={() => {
                 this.onSortingChosed(Direction.Descending);
               }}
-              isLoader={started}
+              isLoader={started && sortDirection === Direction.Descending}
+              disabled={started && sortDirection === Direction.Ascending}
             />
           </div>
-          <Button text="Новый массив" onClick={this.refreshArray} isLoader={started} />
+          <Button text="Новый массив" onClick={this.refreshArray} disabled={started} />
         </div>
         <div className={styles.sortingBlock}>
           {array.map((v, idx) => (
