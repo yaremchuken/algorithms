@@ -1,8 +1,8 @@
 .inputBlock {
   margin: 0 auto;
-  max-width: 522px;
   display: flex;
-  gap: 12px;
+  justify-content: center;
+  flex-direction: column;
 }
 
 .listBlock {
@@ -11,5 +11,50 @@
   display: flex;
   gap: 12px;
   justify-content: center;
+  align-items: center;
   transition: all 1s ease-out;
+}
+
+.valueInputs {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+}
+
+.indexInputs {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+}
+
+.node {
+  position: relative;
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  align-items: center;
+}
+
+.insertion {
+  position: absolute;
+  left: 12px;
+  top: -66px;
+}
+
+.removal {
+  position: absolute;
+  left: 12px;
+  bottom: -100px;
+}
+
+.limitedWidth {
+  width: 204px;
+}
+
+.smallButton {
+  width: 175px;
+}
+
+.wideButton {
+  width: 362px;
 }

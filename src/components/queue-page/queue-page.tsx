@@ -1,4 +1,4 @@
-import React, { Component, FormEvent } from 'react';
+import React, { Component } from 'react';
 import { Queue } from '../../structs/Queue';
 import { ElementStates } from '../../types/element-states';
 import { Button } from '../ui/button/button';

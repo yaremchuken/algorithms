@@ -74,7 +74,13 @@ class FibonacciPage extends Component<FibonacciPageProps, FibonacciPageState> {
     return (
       <SolutionLayout title="Последовательность Фибоначчи">
         <div className={styles.inputBlock}>
-          <Input type="digit" max={19} isLimitText onInput={this.onInput} />
+          <Input
+            type="digit"
+            max={19}
+            isLimitText
+            extraClass={styles.limitedWidth}
+            onInput={this.onInput}
+          />
           <Button text="Рассчитать" isLoader={this.state.started} onClick={this.onPressStart} />
         </div>
         <div className={styles.fibonacciBlock}>

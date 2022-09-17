@@ -51,7 +51,7 @@ export class Queue<T> implements IQueue<T> {
 
   isEmpty = () => this.length === 0;
 
-  isFull = () => this.length == this.size;
+  isFull = () => this.length === this.size;
 
   map<U>(callbackfn: (value: T | null, index: number, array: (T | null)[]) => U): U[] {
     return Array.from(Array(this.size).keys())

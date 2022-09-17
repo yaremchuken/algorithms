@@ -1,4 +1,4 @@
-import React, { Component, FormEvent, useState } from 'react';
+import React, { Component, FormEvent } from 'react';
 import { ElementStates } from '../../types/element-states';
 import { Button } from '../ui/button/button';
 import { Circle } from '../ui/circle/circle';
@@ -85,7 +85,12 @@ class StringComponent extends Component<StringComponentProps, StringComponentSta
     return (
       <SolutionLayout title="Строка">
         <div className={styles.inputBlock}>
-          <Input maxLength={11} isLimitText onInput={this.onInput} />
+          <Input
+            maxLength={11}
+            isLimitText
+            extraClass={styles.limitedWidth}
+            onInput={this.onInput}
+          />
           <Button text="Развернуть" isLoader={this.state.started} onClick={this.onPressStart} />
         </div>
         <div className={styles.reverseBlock}>
