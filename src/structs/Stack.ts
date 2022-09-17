@@ -22,7 +22,7 @@ export class Stack<T> implements IStack<T> {
 
   getSize = () => this.container.length;
 
-  map<U>(callbackfn: (value: T, index: number, array: T[]) => U): U[] {
-    return this.container.map(callbackfn);
-  }
+  elements = () => {
+    return [...this.container];
+  };
 }

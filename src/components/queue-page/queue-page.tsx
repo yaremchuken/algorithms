@@ -103,7 +103,7 @@ class QueuePage extends Component<QueuePageProps, QueuePageState> {
           <Button text="Очистить" onClick={this.onClear} disabled={highlight !== -1} />
         </div>
         <div className={styles.queueBlock}>
-          {queue.map((v, idx) => (
+          {queue.elements().map((v, idx) => (
             <Circle
               key={idx}
               letter={`${v ?? ''}`}

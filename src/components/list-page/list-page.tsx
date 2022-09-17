@@ -82,7 +82,7 @@ class ListPage extends Component<ListPageProps, ListPageState> {
       },
       () =>
         setTimeout(() => {
-          nList.insertAt(value, index);
+          nList.addByIndex(value, index);
           this.setState(
             {
               list: nList,
@@ -138,7 +138,7 @@ class ListPage extends Component<ListPageProps, ListPageState> {
         );
       } else {
         const nList = this.state.list;
-        nList.removeAt(deleteAt);
+        nList.deleteByIndex(deleteAt);
         this.setState({
           list: nList,
           indexCounter: -1,
@@ -215,7 +215,7 @@ class ListPage extends Component<ListPageProps, ListPageState> {
           </div>
         </div>
         <div className={styles.listBlock}>
-          {list.map((v, idx) => (
+          {list.toArray().map((v, idx) => (
             <div key={idx} className={styles.node}>
               <div>
                 {insertion?.index === idx && (

@@ -48,7 +48,7 @@ class FibonacciPage extends Component<FibonacciPageProps, FibonacciPageState> {
         (state) => {
           return {
             ...state,
-            sequence: [...state.sequence, this.calcNextDigit(state.sequence)],
+            sequence: this.getFibonacciNumbers(state.sequence.length),
           };
         },
         () => {
@@ -64,10 +64,13 @@ class FibonacciPage extends Component<FibonacciPageProps, FibonacciPageState> {
     }, 500);
   };
 
-  calcNextDigit = (sequence: number[]) => {
-    if (sequence.length === 0) return 0;
-    if (sequence.length === 1) return 1;
-    return sequence[sequence.length - 2] + sequence[sequence.length - 1];
+  getFibonacciNumbers = (value: number) => {
+    if (value === 0) return [0];
+    const fib = [0, 1];
+    for (let i = 2; i <= value; i++) {
+      fib.push(fib[i - 2] + fib[i - 1]);
+    }
+    return fib;
   };
 
   render(): React.ReactNode {

@@ -8,10 +8,12 @@ export class Node<T> {
 }
 
 interface ILinkedList<T> {
+  prepend: (element: T) => void;
   append: (element: T) => void;
-  remove: (element: T) => void;
-  insertAt: (element: T, index: number) => void;
-  removeAt: (index: number) => void;
+  addByIndex: (element: T, index: number) => void;
+  deleteByIndex: (index: number) => void;
+  deleteHead: () => void;
+  deleteTail: () => void;
   getSize: () => number;
 }
 
@@ -21,6 +23,13 @@ export class LinkedList<T> implements ILinkedList<T> {
   constructor() {
     this.head = null;
     this.size = 0;
+  }
+
+  prepend(element: T) {
+    const node = new Node(element);
+    node.next = this.head;
+    this.head = node;
+    this.size++;
   }
 
   append(element: T) {
@@ -41,29 +50,7 @@ export class LinkedList<T> implements ILinkedList<T> {
     this.size++;
   }
 
-  remove(element: T) {
-    if (this.head === null) return;
-
-    if (element === this.head.value) {
-      this.head = this.head.next;
-    } else {
-      let prev;
-      let curr = this.head;
-
-      while (curr.next) {
-        prev = curr;
-        curr = curr.next;
-        if (curr.value === element) {
-          prev.next = curr.next;
-          break;
-        }
-      }
-    }
-
-    this.size--;
-  }
-
-  insertAt(element: T, index: number) {
+  addByIndex = (element: T, index: number) => {
     if (index < 0 || index > this.size) return;
 
     const node = new Node(element);
@@ -92,9 +79,9 @@ export class LinkedList<T> implements ILinkedList<T> {
     }
 
     this.size++;
-  }
+  };
 
-  removeAt = (index: number) => {
+  deleteByIndex = (index: number) => {
     if (index < 0 || index > this.size) return;
     if (this.head === null) return;
 
@@ -120,11 +107,19 @@ export class LinkedList<T> implements ILinkedList<T> {
     this.size--;
   };
 
+  deleteHead() {
+    this.deleteByIndex(0);
+  }
+
+  deleteTail() {
+    this.deleteByIndex(this.size - 1);
+  }
+
   getSize() {
     return this.size;
   }
 
-  map<U>(callbackfn: (value: T | null, index: number, array: (T | null)[]) => U): U[] {
+  toArray = () => {
     if (this.head === null) return [];
 
     const array: T[] = [];
@@ -135,6 +130,6 @@ export class LinkedList<T> implements ILinkedList<T> {
       curr = curr.next;
     }
 
-    return array.map(callbackfn);
-  }
+    return array;
+  };
 }

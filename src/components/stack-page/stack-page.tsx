@@ -57,7 +57,7 @@ class StackPage extends Component<StackPageProps, StackPageState> {
           <Button text="Очистить" onClick={this.onClear} />
         </div>
         <div className={styles.stackBlock}>
-          {stack.map((v, idx) => (
+          {stack.elements().map((v, idx) => (
             <Circle
               key={idx}
               letter={`${v}`}
