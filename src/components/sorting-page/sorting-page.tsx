@@ -36,7 +36,7 @@ class SortingPage extends Component<SortingPageProps, SortingPageState> {
   }
 
   componentDidMount(): void {
-    this.refreshArray();
+    this.replenishArray();
   }
 
   switchSortingType = (sortType: string) => {
@@ -69,12 +69,11 @@ class SortingPage extends Component<SortingPageProps, SortingPageState> {
     );
   };
 
-  refreshArray = () => {
+  replenishArray = () => {
     const len = 3 + Math.floor(Math.random() * 15);
     const array: number[] = [];
-    for (let i = 0; i < len; i++) {
-      array[i] = Math.floor(Math.random() * 101);
-    }
+    for (let i = 0; i < len; i++) array[i] = Math.floor(Math.random() * 101);
+
     this.setState((state) => {
       return {
         array,
@@ -90,10 +89,10 @@ class SortingPage extends Component<SortingPageProps, SortingPageState> {
   processSortingChoice = () => {
     setTimeout(() => {
       if (!this.state.started) return;
+
+      let { currPointer, sortedTill } = this.state;
       let array = [...this.state.array];
       let comparePointer = this.state.comparePointer + 1;
-      let currPointer = this.state.currPointer;
-      let sortedTill = this.state.sortedTill;
       let suitableIdx =
         this.state.suitableIdx === -1 ? this.state.currPointer : this.state.suitableIdx;
 
@@ -134,10 +133,10 @@ class SortingPage extends Component<SortingPageProps, SortingPageState> {
   processSortingBubble = () => {
     setTimeout(() => {
       if (!this.state.started) return;
+
+      let { currPointer, sortedTill } = this.state;
       let array = [...this.state.array];
       let comparePointer = this.state.comparePointer;
-      let currPointer = this.state.currPointer;
-      let sortedTill = this.state.sortedTill;
 
       if (sortedTill === 0) {
         this.setState({
@@ -215,7 +214,7 @@ class SortingPage extends Component<SortingPageProps, SortingPageState> {
               disabled={started && sortDirection === Direction.Ascending}
             />
           </div>
-          <Button text="Новый массив" onClick={this.refreshArray} disabled={started} />
+          <Button text="Новый массив" onClick={this.replenishArray} disabled={started} />
         </div>
         <div className={styles.sortingBlock}>
           {array.map((v, idx) => (

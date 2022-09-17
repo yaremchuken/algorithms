@@ -17,7 +17,7 @@ interface QueuePageState {
 }
 
 class QueuePage extends Component<QueuePageProps, QueuePageState> {
-  private queueSize: number = 7;
+  private readonly queueSize: number = 7;
 
   constructor(props: QueuePageProps) {
     super(props);

@@ -115,6 +115,7 @@ class ListPage extends Component<ListPageProps, ListPageState> {
   onRemoveByIndex = () => {
     const index = this.getInput(true);
     if (isNaN(index) || index >= this.state.list.getSize()) return;
+
     this.setState(
       {
         deleteAt: index,
