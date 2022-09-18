@@ -1,0 +1,20 @@
+.inputBlock {
+  margin: 0 auto;
+  display: flex;
+  gap: 80px;
+  justify-content: center;
+}
+
+.operationInputs {
+  display: flex;
+  gap: 12px;
+}
+
+.stackBlock {
+  margin: 0 auto;
+  padding-top: 120px;
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  transition: all 1s ease-out;
+}
