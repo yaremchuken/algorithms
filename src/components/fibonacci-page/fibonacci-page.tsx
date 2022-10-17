@@ -84,9 +84,14 @@ class FibonacciPage extends Component<FibonacciPageProps, FibonacciPageState> {
             extraClass={styles.limitedWidth}
             onInput={this.onInput}
           />
-          <Button text="Рассчитать" isLoader={this.state.started} onClick={this.onPressStart} />
+          <Button
+            text="Рассчитать"
+            isLoader={this.state.started}
+            disabled={this.state.input === 0}
+            onClick={this.onPressStart}
+          />
         </div>
-        <div className={styles.fibonacciBlock}>
+        <div className={styles.fibonacciBlock} cy-key="result-holder">
           {this.state.sequence.map((v, idx) => (
             <Circle key={idx} letter={`${v}`} index={idx} />
           ))}

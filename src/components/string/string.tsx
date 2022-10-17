@@ -91,9 +91,14 @@ class StringComponent extends Component<StringComponentProps, StringComponentSta
             extraClass={styles.limitedWidth}
             onInput={this.onInput}
           />
-          <Button text="Развернуть" isLoader={this.state.started} onClick={this.onPressStart} />
+          <Button
+            text="Развернуть"
+            isLoader={this.state.started}
+            disabled={this.state.input.length === 0}
+            onClick={this.onPressStart}
+          />
         </div>
-        <div className={styles.reverseBlock}>
+        <div className={styles.reverseBlock} cy-key="result-holder">
           {this.state.input.split('').map((v, idx) => (
             <Circle
               key={idx}
