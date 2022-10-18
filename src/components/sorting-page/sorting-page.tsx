@@ -89,32 +89,18 @@ class SortingPage extends Component<SortingPageProps, SortingPageState> {
   processSortingChoice = () => {
     setTimeout(() => {
       if (!this.state.started) return;
-
-      let { currPointer, sortedTill } = this.state;
-      let array = [...this.state.array];
-      let comparePointer = this.state.comparePointer + 1;
-      let suitableIdx =
-        this.state.suitableIdx === -1 ? this.state.currPointer : this.state.suitableIdx;
-
-      if (currPointer === array.length) {
+      if (this.state.currPointer === this.state.array.length) {
         this.setState({
           started: false,
         });
       } else {
-        if (comparePointer === array.length) {
-          if (suitableIdx !== currPointer) {
-            const tmp = array.splice(suitableIdx, 1)[0];
-            array.splice(currPointer, 0, tmp);
-          }
-          currPointer++;
-          sortedTill++;
-          comparePointer = currPointer;
-          suitableIdx = currPointer;
-        }
-
-        if (this.sortCondition(array[comparePointer], array[suitableIdx])) {
-          suitableIdx = comparePointer;
-        }
+        const { array, comparePointer, currPointer, sortedTill, suitableIdx } = this.onChoiceSort(
+          [...this.state.array],
+          this.state.currPointer,
+          this.state.sortedTill,
+          this.state.comparePointer,
+          this.state.suitableIdx
+        );
 
         this.setState(
           {
@@ -130,32 +116,57 @@ class SortingPage extends Component<SortingPageProps, SortingPageState> {
     }, 500);
   };
 
+  onChoiceSort = (
+    array: number[],
+    currPointer: number,
+    sortedTill: number,
+    comparePointer: number,
+    suitableIdx: number
+  ) => {
+    const tmpArray = [...array];
+    let tmpCurrPointer = currPointer;
+    let tmpSortedTill = sortedTill;
+    let tmpComparePointer = comparePointer + 1;
+    let tmpSuitableIdx = suitableIdx === -1 ? currPointer : suitableIdx;
+
+    if (tmpComparePointer === tmpArray.length) {
+      if (tmpSuitableIdx !== tmpCurrPointer && tmpArray.length > 0) {
+        const tmp = tmpArray.splice(tmpSuitableIdx, 1)[0];
+        tmpArray.splice(tmpCurrPointer, 0, tmp);
+      }
+      tmpCurrPointer++;
+      tmpSortedTill++;
+      tmpComparePointer = tmpCurrPointer;
+      tmpSuitableIdx = tmpCurrPointer;
+    }
+
+    if (this.sortCondition(tmpArray[tmpComparePointer], tmpArray[tmpSuitableIdx])) {
+      tmpSuitableIdx = tmpComparePointer;
+    }
+
+    return {
+      array: tmpArray,
+      currPointer: tmpCurrPointer,
+      sortedTill: tmpSortedTill,
+      comparePointer: tmpComparePointer,
+      suitableIdx: tmpSuitableIdx,
+    };
+  };
+
   processSortingBubble = () => {
     setTimeout(() => {
       if (!this.state.started) return;
-
-      let { currPointer, sortedTill } = this.state;
-      let array = [...this.state.array];
-      let comparePointer = this.state.comparePointer;
-
-      if (sortedTill === 0) {
+      if (this.state.sortedTill === 0) {
         this.setState({
           started: false,
         });
       } else {
-        if (comparePointer >= sortedTill) {
-          sortedTill--;
-          currPointer = 0;
-          comparePointer = 1;
-        } else {
-          if (this.sortCondition(array[comparePointer], array[currPointer])) {
-            const tmp = array[comparePointer];
-            array[comparePointer] = array[currPointer];
-            array[currPointer] = tmp;
-          }
-          comparePointer++;
-          currPointer++;
-        }
+        const { array, currPointer, sortedTill, comparePointer } = this.onBubbleSort(
+          [...this.state.array],
+          this.state.currPointer,
+          this.state.sortedTill,
+          this.state.comparePointer
+        );
         this.setState(
           {
             array,
@@ -167,6 +178,39 @@ class SortingPage extends Component<SortingPageProps, SortingPageState> {
         );
       }
     }, 500);
+  };
+
+  onBubbleSort = (
+    array: number[],
+    currPointer: number,
+    sortedTill: number,
+    comparePointer: number
+  ) => {
+    const tmpArray = [...array];
+    let tmpCurrPointer = currPointer;
+    let tmpSortedTill = sortedTill;
+    let tmpComparePointer = comparePointer;
+
+    if (comparePointer >= sortedTill) {
+      tmpSortedTill--;
+      tmpCurrPointer = 0;
+      tmpComparePointer = 1;
+    } else {
+      if (this.sortCondition(array[comparePointer], array[currPointer])) {
+        const tmp = array[comparePointer];
+        tmpArray[comparePointer] = tmpArray[currPointer];
+        tmpArray[currPointer] = tmp;
+      }
+      tmpComparePointer++;
+      tmpCurrPointer++;
+    }
+
+    return {
+      array: tmpArray,
+      currPointer: tmpCurrPointer,
+      sortedTill: tmpSortedTill,
+      comparePointer: tmpComparePointer,
+    };
   };
 
   sortCondition = (a: number, b: number) => {
