@@ -40,14 +40,12 @@ describe('Корректность разворота строки', () => {
 
   it('С одним символом', () => {
     const toReverse = 'a';
-
     let result = stringComponent.reverseStep(toReverse, [], 0, toReverse.length - 1);
     expect(result.input).toEqual('a');
   });
 
   it('Пустая строка', () => {
     const toReverse = '';
-
     let result = stringComponent.reverseStep(toReverse, [], 0, toReverse.length - 1);
     expect(result.input).toEqual('');
   });
