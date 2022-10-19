@@ -5,6 +5,7 @@ import { Circle } from '../ui/circle/circle';
 import { Input } from '../ui/input/input';
 import { SolutionLayout } from '../ui/solution-layout/solution-layout';
 import styles from './string.module.css';
+import { stringReverse } from './utils';
 
 interface StringComponentProps {}
 
@@ -50,14 +51,19 @@ class StringComponent extends Component<StringComponentProps, StringComponentSta
   processReverse = () => {
     setTimeout(() => {
       if (!this.state.started) return;
+
+      const { input, startPointer, endPointer, changedIndexes } = this.state;
+
+      const reversed = stringReverse(input, changedIndexes, startPointer, endPointer);
+
       this.setState(
         (state) => {
           return {
             ...state,
-            input: this.rearrangeChars(state.input, state.startPointer, state.endPointer),
-            changedIndexes: [...state.changedIndexes, state.startPointer, state.endPointer],
-            startPointer: state.startPointer + 1,
-            endPointer: state.endPointer - 1,
+            input: reversed.input,
+            changedIndexes: reversed.changedIndexes,
+            startPointer: reversed.firstPointer,
+            endPointer: reversed.secondPointer,
           };
         },
         () => {
@@ -73,14 +79,6 @@ class StringComponent extends Component<StringComponentProps, StringComponentSta
     }, 1000);
   };
 
-  rearrangeChars = (str: string, first: number, second: number) => {
-    const arr = str.split('');
-    const tmp = arr[first];
-    arr[first] = arr[second];
-    arr[second] = tmp;
-    return arr.join('');
-  };
-
   render(): React.ReactNode {
     return (
       <SolutionLayout title="Строка">
@@ -90,12 +88,20 @@ class StringComponent extends Component<StringComponentProps, StringComponentSta
             isLimitText
             extraClass={styles.limitedWidth}
             onInput={this.onInput}
+            data-testid={`input`}
           />
-          <Button text="Развернуть" isLoader={this.state.started} onClick={this.onPressStart} />
+          <Button
+            text="Развернуть"
+            isLoader={this.state.started}
+            disabled={this.state.input.length === 0}
+            onClick={this.onPressStart}
+            data-testid={`reversion-btn`}
+          />
         </div>
-        <div className={styles.reverseBlock}>
+        <div className={styles.reverseBlock} cy-key="result-holder">
           {this.state.input.split('').map((v, idx) => (
             <Circle
+              data-testid={`circle-${idx}`}
               key={idx}
               letter={v}
               state={

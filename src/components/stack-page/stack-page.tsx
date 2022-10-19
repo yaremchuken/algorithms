@@ -9,6 +9,7 @@ import styles from './stack-page.module.css';
 interface StackPageProps {}
 
 interface StackPageState {
+  input: string;
   stack: Stack<number>;
 }
 
@@ -16,9 +17,16 @@ class StackPage extends Component<StackPageProps, StackPageState> {
   constructor(props: StackPageProps) {
     super(props);
     this.state = {
+      input: '',
       stack: new Stack(),
     };
   }
+
+  onInput = (e: FormEvent<HTMLInputElement>) => {
+    this.setState({
+      input: e.currentTarget.value,
+    });
+  };
 
   onAdd = (e: FormEvent<HTMLButtonElement>) => {
     const input = +(document.querySelector('#stack-input-field') as HTMLInputElement).value;
@@ -50,13 +58,13 @@ class StackPage extends Component<StackPageProps, StackPageState> {
       <SolutionLayout title="Стек">
         <div className={styles.inputBlock}>
           <div className={styles.operationInputs}>
-            <Input maxLength={4} isLimitText id="stack-input-field" />
-            <Button text="Добавить" onClick={this.onAdd} />
+            <Input maxLength={4} isLimitText id="stack-input-field" onInput={this.onInput} />
+            <Button text="Добавить" onClick={this.onAdd} disabled={this.state.input === ''} />
             <Button text="Удалить" onClick={this.onRemove} />
           </div>
           <Button text="Очистить" onClick={this.onClear} />
         </div>
-        <div className={styles.stackBlock}>
+        <div className={styles.stackBlock} cy-key="result-holder">
           {stack.elements().map((v, idx) => (
             <Circle
               key={idx}

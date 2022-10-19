@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, FormEvent } from 'react';
 import { Queue } from '../../structs/Queue';
 import { ElementStates } from '../../types/element-states';
 import { Button } from '../ui/button/button';
@@ -10,6 +10,7 @@ import styles from './queue-page.module.css';
 interface QueuePageProps {}
 
 interface QueuePageState {
+  input: string;
   queue: Queue<number>;
   head: number;
   tail: number;
@@ -22,12 +23,19 @@ class QueuePage extends Component<QueuePageProps, QueuePageState> {
   constructor(props: QueuePageProps) {
     super(props);
     this.state = {
+      input: '',
       queue: new Queue(this.queueSize),
       head: -1,
       tail: -1,
       highlight: -1,
     };
   }
+
+  onInput = (e: FormEvent<HTMLInputElement>) => {
+    this.setState({
+      input: e.currentTarget.value,
+    });
+  };
 
   onAdd = () => {
     const { queue, head, tail, highlight } = this.state;
@@ -55,6 +63,7 @@ class QueuePage extends Component<QueuePageProps, QueuePageState> {
       () =>
         setTimeout(() => {
           this.setState({
+            input: '',
             highlight: -1,
           });
         }, 300)
@@ -96,13 +105,17 @@ class QueuePage extends Component<QueuePageProps, QueuePageState> {
       <SolutionLayout title="Очередь">
         <div className={styles.inputBlock}>
           <div className={styles.operationInputs}>
-            <Input maxLength={4} isLimitText id="queue-input-field" />
-            <Button text="Добавить" onClick={this.onAdd} disabled={highlight !== -1} />
+            <Input maxLength={4} isLimitText id="queue-input-field" onInput={this.onInput} />
+            <Button
+              text="Добавить"
+              onClick={this.onAdd}
+              disabled={highlight !== -1 || this.state.input === ''}
+            />
             <Button text="Удалить" onClick={this.onRemove} disabled={highlight !== -1} />
           </div>
           <Button text="Очистить" onClick={this.onClear} disabled={highlight !== -1} />
         </div>
-        <div className={styles.queueBlock}>
+        <div className={styles.queueBlock} cy-key="result-holder">
           {queue.elements().map((v, idx) => (
             <Circle
               key={idx}

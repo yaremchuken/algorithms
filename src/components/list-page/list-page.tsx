@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, FormEvent } from 'react';
 import { LinkedList } from '../../structs/LinkedList';
 import { ElementStates } from '../../types/element-states';
 import { Button } from '../ui/button/button';
@@ -25,6 +25,8 @@ enum Operation {
 interface ListPageProps {}
 
 interface ListPageState {
+  valueInput: string;
+  indexInput: string;
   list: LinkedList<number>;
   insertion: IndexedValue | null;
   indexCounter: number;
@@ -37,6 +39,8 @@ class ListPage extends Component<ListPageProps, ListPageState> {
   constructor(props: ListPageProps) {
     super(props);
     this.state = {
+      valueInput: '',
+      indexInput: '',
       list: new LinkedList<number>(),
       insertion: null,
       indexCounter: -1,
@@ -53,6 +57,18 @@ class ListPage extends Component<ListPageProps, ListPageState> {
       list,
     });
   }
+
+  onInputValue = (e: FormEvent<HTMLInputElement>) => {
+    this.setState({
+      valueInput: e.currentTarget.value,
+    });
+  };
+
+  onInputIndex = (e: FormEvent<HTMLInputElement>) => {
+    this.setState({
+      indexInput: e.currentTarget.value,
+    });
+  };
 
   onAdd = (asHead: boolean = true) => {
     const input = this.getInput();
@@ -166,20 +182,27 @@ class ListPage extends Component<ListPageProps, ListPageState> {
               isLimitText
               extraClass={styles.limitedWidth}
               id="value-input-field"
+              onInput={this.onInputValue}
             />
             <Button
               text="Добавить в head"
               extraClass={styles.smallButton}
               onClick={() => this.onAdd()}
               isLoader={operation === Operation.ADD_HEAD}
-              disabled={operation !== null && operation !== Operation.ADD_HEAD}
+              disabled={
+                (operation !== null && operation !== Operation.ADD_HEAD) ||
+                this.state.valueInput === ''
+              }
             />
             <Button
               text="Добавить в tail"
               extraClass={styles.smallButton}
               onClick={() => this.onAdd(false)}
               isLoader={operation === Operation.ADD_TAIL}
-              disabled={operation !== null && operation !== Operation.ADD_TAIL}
+              disabled={
+                (operation !== null && operation !== Operation.ADD_TAIL) ||
+                this.state.valueInput === ''
+              }
             />
             <Button
               text="Удалить из head"
@@ -197,24 +220,35 @@ class ListPage extends Component<ListPageProps, ListPageState> {
             />
           </div>
           <div className={styles.indexInputs}>
-            <Input id="index-input-field" extraClass={styles.limitedWidth} />
+            <Input
+              id="index-input-field"
+              extraClass={styles.limitedWidth}
+              onInput={this.onInputIndex}
+            />
             <Button
               text="Добавить по индексу"
               extraClass={styles.wideButton}
               onClick={() => this.onAddByIndex()}
               isLoader={operation === Operation.ADD_BY_INDEX}
-              disabled={operation !== null && operation !== Operation.ADD_BY_INDEX}
+              disabled={
+                (operation !== null && operation !== Operation.ADD_BY_INDEX) ||
+                this.state.valueInput === '' ||
+                this.state.indexInput === ''
+              }
             />
             <Button
               text="Удалить по индексу"
               extraClass={styles.wideButton}
               onClick={() => this.onRemoveByIndex()}
               isLoader={operation === Operation.REMOVE_BY_INDEX}
-              disabled={operation !== null && operation !== Operation.REMOVE_BY_INDEX}
+              disabled={
+                (operation !== null && operation !== Operation.REMOVE_BY_INDEX) ||
+                this.state.indexInput === ''
+              }
             />
           </div>
         </div>
-        <div className={styles.listBlock}>
+        <div className={styles.listBlock} cy-key="result-holder">
           {list.toArray().map((v, idx) => (
             <div key={idx} className={styles.node}>
               <div>
