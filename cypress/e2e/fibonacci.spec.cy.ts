@@ -13,6 +13,9 @@ describe('E2E - тестирование Фибоначчи', function () {
   });
 
   it('Корректность генерирования чисел', () => {
+    const expectedValues = ['0', '1', '1', '2', '3', '5'];
+    const expectedIndexes = ['0', '1', '2', '3', '4', '5'];
+
     cy.clock();
 
     cy.get('input').type('5');
@@ -23,24 +26,10 @@ describe('E2E - тестирование Фибоначчи', function () {
     const circles = cy.get('[cy-key="result-holder"]').children();
 
     circles.should('have.length', 6);
-
     circles.within(($els) => {
-      expect($els.eq(0)).to.contain('0');
-      expect($els.eq(1)).to.contain('1');
-      expect($els.eq(2)).to.contain('1');
-      expect($els.eq(3)).to.contain('2');
-      expect($els.eq(4)).to.contain('3');
-      expect($els.eq(5)).to.contain('5');
-    });
-
-    // Индексы под кружками
-    circles.within(($els) => {
-      expect($els.eq(0)).to.contain('0');
-      expect($els.eq(1)).to.contain('1');
-      expect($els.eq(2)).to.contain('2');
-      expect($els.eq(3)).to.contain('3');
-      expect($els.eq(4)).to.contain('4');
-      expect($els.eq(5)).to.contain('5');
+      for (let i = 0; i < expectedValues.length; i++) {
+        expect($els.eq(i)).to.contain(expectedValues[i]).to.contain(expectedIndexes[i]);
+      }
     });
   });
 });

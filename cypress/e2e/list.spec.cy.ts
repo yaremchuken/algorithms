@@ -1,3 +1,5 @@
+import { CHANGING_COLOR, DEFAULT_COLOR, MODIFIED_COLOR } from '../utils/constant';
+
 describe('E2E - тестирование Связанного списка', function () {
   beforeEach(() => {
     cy.visit('http://localhost:3000');
@@ -31,7 +33,7 @@ describe('E2E - тестирование Связанного списка', fun
         $els.each(($el) => {
           cy.wrap($el)
             .get('[class^=circle_circle]')
-            .should('have.css', 'border-color', 'rgb(0, 50, 255)');
+            .should('have.css', 'border-color', DEFAULT_COLOR);
         });
       });
   });
@@ -69,7 +71,7 @@ describe('E2E - тестирование Связанного списка', fun
 
         cy.get($els.eq(0))
           .get('[class^=circle_circle]')
-          .should('have.css', 'border-color', 'rgb(127, 224, 81)');
+          .should('have.css', 'border-color', MODIFIED_COLOR);
       });
 
     cy.tick(500);
@@ -85,7 +87,7 @@ describe('E2E - тестирование Связанного списка', fun
 
         cy.get($els.eq(0))
           .get('[class^=circle_circle]')
-          .should('have.css', 'border-color', 'rgb(0, 50, 255)');
+          .should('have.css', 'border-color', DEFAULT_COLOR);
       });
   });
 
@@ -132,7 +134,7 @@ describe('E2E - тестирование Связанного списка', fun
 
         cy.get($els.eq(4))
           .get('[class^=circle_circle]')
-          .should('have.css', 'border-color', 'rgb(0, 50, 255)');
+          .should('have.css', 'border-color', DEFAULT_COLOR);
       });
   });
 
@@ -179,7 +181,7 @@ describe('E2E - тестирование Связанного списка', fun
         expect($els.eq(index)).to.contain('10');
         cy.get($els.eq(index))
           .get('[class^=circle_circle]')
-          .should('have.css', 'border-color', 'rgb(0, 50, 255)');
+          .should('have.css', 'border-color', DEFAULT_COLOR);
       });
   });
 
@@ -195,12 +197,12 @@ describe('E2E - тестирование Связанного списка', fun
 
         cy.get($els.eq(0))
           .get('[class^=circle_circle]')
-          .should('have.css', 'border-color', 'rgb(210, 82, 225)');
+          .should('have.css', 'border-color', CHANGING_COLOR);
 
         cy.get($els.eq(0))
           .get('[class*=removal]')
           .get('[class^=circle_circle]')
-          .should('have.css', 'border-color', 'rgb(210, 82, 225)');
+          .should('have.css', 'border-color', CHANGING_COLOR);
       });
 
     cy.tick(500);
@@ -225,7 +227,7 @@ describe('E2E - тестирование Связанного списка', fun
 
         cy.get($els.eq(0))
           .get('[class^=circle_circle]')
-          .should('have.css', 'border-color', 'rgb(210, 82, 225)');
+          .should('have.css', 'border-color', CHANGING_COLOR);
       });
 
     cy.tick(500);
@@ -238,11 +240,11 @@ describe('E2E - тестирование Связанного списка', fun
 
         cy.get($els.eq(0))
           .get('[class^=circle_circle]')
-          .should('have.css', 'border-color', 'rgb(210, 82, 225)');
+          .should('have.css', 'border-color', CHANGING_COLOR);
 
         cy.get($els.eq(1))
           .get('[class^=circle_circle]')
-          .should('have.css', 'border-color', 'rgb(210, 82, 225)');
+          .should('have.css', 'border-color', CHANGING_COLOR);
       });
 
     cy.tick(1000);
@@ -255,12 +257,12 @@ describe('E2E - тестирование Связанного списка', fun
 
         cy.get($els.eq(3))
           .get('[class^=circle_circle]')
-          .should('have.css', 'border-color', 'rgb(210, 82, 225)');
+          .should('have.css', 'border-color', CHANGING_COLOR);
 
         cy.get($els.eq(3))
           .get('[class*=removal]')
           .get('[class^=circle_circle]')
-          .should('have.css', 'border-color', 'rgb(210, 82, 225)');
+          .should('have.css', 'border-color', CHANGING_COLOR);
       });
 
     cy.tick(500);
@@ -290,7 +292,7 @@ describe('E2E - тестирование Связанного списка', fun
 
         cy.get($els.eq(0))
           .get('[class^=circle_circle]')
-          .should('have.css', 'border-color', 'rgb(210, 82, 225)');
+          .should('have.css', 'border-color', CHANGING_COLOR);
       });
 
     cy.tick(500);
@@ -303,11 +305,11 @@ describe('E2E - тестирование Связанного списка', fun
 
         cy.get($els.eq(0))
           .get('[class^=circle_circle]')
-          .should('have.css', 'border-color', 'rgb(210, 82, 225)');
+          .should('have.css', 'border-color', CHANGING_COLOR);
 
         cy.get($els.eq(1))
           .get('[class^=circle_circle]')
-          .should('have.css', 'border-color', 'rgb(210, 82, 225)');
+          .should('have.css', 'border-color', CHANGING_COLOR);
       });
 
     cy.tick(500);
@@ -320,12 +322,12 @@ describe('E2E - тестирование Связанного списка', fun
 
         cy.get($els.eq(index))
           .get('[class^=circle_circle]')
-          .should('have.css', 'border-color', 'rgb(210, 82, 225)');
+          .should('have.css', 'border-color', CHANGING_COLOR);
 
         cy.get($els.eq(index))
           .get('[class*=removal]')
           .get('[class^=circle_circle]')
-          .should('have.css', 'border-color', 'rgb(210, 82, 225)');
+          .should('have.css', 'border-color', CHANGING_COLOR);
       });
 
     cy.tick(500);
