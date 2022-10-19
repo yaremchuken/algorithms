@@ -3,6 +3,7 @@ import renderer from 'react-test-renderer';
 import { render, screen, fireEvent } from '@testing-library/react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { Button } from '../components/ui/button/button';
+import { Direction } from '../types/direction';
 
 describe('Тестирование компонента Button', () => {
   it('Кнопка с текстом', () => {
@@ -25,12 +26,18 @@ describe('Тестирование компонента Button', () => {
     expect(tree).toMatchSnapshot();
   });
 
-  it('Корректность вызова колбэка при клике', () => {
-    let clicked = false;
+  it('Кнопка с ASC сортировкой', () => {
+    const tree = renderer.create(<Button sorting={Direction.Ascending} />).toJSON();
+    expect(tree).toMatchSnapshot();
+  });
 
-    const callMe = () => {
-      clicked = true;
-    };
+  it('Кнопка с DSC сортировкой', () => {
+    const tree = renderer.create(<Button sorting={Direction.Descending} />).toJSON();
+    expect(tree).toMatchSnapshot();
+  });
+
+  it('Корректность вызова колбэка при клике', () => {
+    const callMe = jest.fn();
 
     const { getByTestId } = render(<Button data-testid={'button'} onClick={callMe} />);
 
@@ -38,6 +45,6 @@ describe('Тестирование компонента Button', () => {
     expect(button).toBeTruthy();
     fireEvent.click(button);
 
-    expect(clicked).toEqual(true);
+    expect(callMe).toHaveBeenCalledTimes(1);
   });
 });

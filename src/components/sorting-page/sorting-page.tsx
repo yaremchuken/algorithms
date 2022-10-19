@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Direction } from '../../types/direction';
 import { ElementStates } from '../../types/element-states';
+import { onBubbleSort, onChoiceSort } from '../../utils/utils';
 import { Button } from '../ui/button/button';
 import { Column } from '../ui/column/column';
 import { RadioInput } from '../ui/radio-input/radio-input';
@@ -94,12 +95,13 @@ class SortingPage extends Component<SortingPageProps, SortingPageState> {
           started: false,
         });
       } else {
-        const { array, comparePointer, currPointer, sortedTill, suitableIdx } = this.onChoiceSort(
+        const { array, comparePointer, currPointer, sortedTill, suitableIdx } = onChoiceSort(
           [...this.state.array],
           this.state.currPointer,
           this.state.sortedTill,
           this.state.comparePointer,
-          this.state.suitableIdx
+          this.state.suitableIdx,
+          this.state.sortDirection
         );
 
         this.setState(
@@ -116,43 +118,6 @@ class SortingPage extends Component<SortingPageProps, SortingPageState> {
     }, 500);
   };
 
-  onChoiceSort = (
-    array: number[],
-    currPointer: number,
-    sortedTill: number,
-    comparePointer: number,
-    suitableIdx: number
-  ) => {
-    const tmpArray = [...array];
-    let tmpCurrPointer = currPointer;
-    let tmpSortedTill = sortedTill;
-    let tmpComparePointer = comparePointer + 1;
-    let tmpSuitableIdx = suitableIdx === -1 ? currPointer : suitableIdx;
-
-    if (tmpComparePointer === tmpArray.length) {
-      if (tmpSuitableIdx !== tmpCurrPointer && tmpArray.length > 0) {
-        const tmp = tmpArray.splice(tmpSuitableIdx, 1)[0];
-        tmpArray.splice(tmpCurrPointer, 0, tmp);
-      }
-      tmpCurrPointer++;
-      tmpSortedTill++;
-      tmpComparePointer = tmpCurrPointer;
-      tmpSuitableIdx = tmpCurrPointer;
-    }
-
-    if (this.sortCondition(tmpArray[tmpComparePointer], tmpArray[tmpSuitableIdx])) {
-      tmpSuitableIdx = tmpComparePointer;
-    }
-
-    return {
-      array: tmpArray,
-      currPointer: tmpCurrPointer,
-      sortedTill: tmpSortedTill,
-      comparePointer: tmpComparePointer,
-      suitableIdx: tmpSuitableIdx,
-    };
-  };
-
   processSortingBubble = () => {
     setTimeout(() => {
       if (!this.state.started) return;
@@ -161,11 +126,12 @@ class SortingPage extends Component<SortingPageProps, SortingPageState> {
           started: false,
         });
       } else {
-        const { array, currPointer, sortedTill, comparePointer } = this.onBubbleSort(
+        const { array, currPointer, sortedTill, comparePointer } = onBubbleSort(
           [...this.state.array],
           this.state.currPointer,
           this.state.sortedTill,
-          this.state.comparePointer
+          this.state.comparePointer,
+          this.state.sortDirection
         );
         this.setState(
           {
@@ -178,43 +144,6 @@ class SortingPage extends Component<SortingPageProps, SortingPageState> {
         );
       }
     }, 500);
-  };
-
-  onBubbleSort = (
-    array: number[],
-    currPointer: number,
-    sortedTill: number,
-    comparePointer: number
-  ) => {
-    const tmpArray = [...array];
-    let tmpCurrPointer = currPointer;
-    let tmpSortedTill = sortedTill;
-    let tmpComparePointer = comparePointer;
-
-    if (comparePointer >= sortedTill) {
-      tmpSortedTill--;
-      tmpCurrPointer = 0;
-      tmpComparePointer = 1;
-    } else {
-      if (this.sortCondition(array[comparePointer], array[currPointer])) {
-        const tmp = array[comparePointer];
-        tmpArray[comparePointer] = tmpArray[currPointer];
-        tmpArray[currPointer] = tmp;
-      }
-      tmpComparePointer++;
-      tmpCurrPointer++;
-    }
-
-    return {
-      array: tmpArray,
-      currPointer: tmpCurrPointer,
-      sortedTill: tmpSortedTill,
-      comparePointer: tmpComparePointer,
-    };
-  };
-
-  sortCondition = (a: number, b: number) => {
-    return this.state.sortDirection === Direction.Ascending ? a < b : a > b;
   };
 
   render(): React.ReactNode {

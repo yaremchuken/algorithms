@@ -4,6 +4,10 @@ describe('E2E - тестирование Фибоначчи', function () {
     cy.get('a[href*="fibonacci"]').click();
   });
 
+  beforeEach(() => {
+    cy.get('input').clear();
+  });
+
   it('Если в инпуте пусто, то кнопка "Рассчитать" недоступна', () => {
     cy.contains('Рассчитать').should('be.disabled');
   });
@@ -14,86 +18,29 @@ describe('E2E - тестирование Фибоначчи', function () {
     cy.get('input').type('5');
     cy.contains('Рассчитать').click();
 
-    cy.tick(500);
+    cy.tick(3000);
 
-    cy.get('[cy-key="result-holder"]')
-      .children()
-      .within(($els) => {
-        expect($els).to.have.length(1);
-        expect($els.eq(0)).to.contain('0');
-      });
+    const circles = cy.get('[cy-key="result-holder"]').children();
 
-    cy.tick(500);
+    circles.should('have.length', 6);
 
-    cy.get('[cy-key="result-holder"]')
-      .children()
-      .within(($els) => {
-        expect($els).to.have.length(2);
-        expect($els.eq(0)).to.contain('0');
-        expect($els.eq(1)).to.contain('1');
-      });
-
-    cy.tick(500);
-
-    cy.get('[cy-key="result-holder"]')
-      .children()
-      .within(($els) => {
-        expect($els).to.have.length(3);
-        expect($els.eq(0)).to.contain('0');
-        expect($els.eq(1)).to.contain('1');
-        expect($els.eq(2)).to.contain('1');
-      });
-
-    cy.tick(500);
-
-    cy.get('[cy-key="result-holder"]')
-      .children()
-      .within(($els) => {
-        expect($els).to.have.length(4);
-        expect($els.eq(0)).to.contain('0');
-        expect($els.eq(1)).to.contain('1');
-        expect($els.eq(2)).to.contain('1');
-        expect($els.eq(3)).to.contain('2');
-      });
-
-    cy.tick(500);
-
-    cy.get('[cy-key="result-holder"]')
-      .children()
-      .within(($els) => {
-        expect($els).to.have.length(5);
-        expect($els.eq(0)).to.contain('0');
-        expect($els.eq(1)).to.contain('1');
-        expect($els.eq(2)).to.contain('1');
-        expect($els.eq(3)).to.contain('2');
-        expect($els.eq(4)).to.contain('3');
-      });
-
-    cy.tick(500);
-
-    cy.get('[cy-key="result-holder"]')
-      .children()
-      .within(($els) => {
-        expect($els).to.have.length(6);
-        expect($els.eq(0)).to.contain('0');
-        expect($els.eq(1)).to.contain('1');
-        expect($els.eq(2)).to.contain('1');
-        expect($els.eq(3)).to.contain('2');
-        expect($els.eq(4)).to.contain('3');
-        expect($els.eq(5)).to.contain('5');
-      });
+    circles.within(($els) => {
+      expect($els.eq(0)).to.contain('0');
+      expect($els.eq(1)).to.contain('1');
+      expect($els.eq(2)).to.contain('1');
+      expect($els.eq(3)).to.contain('2');
+      expect($els.eq(4)).to.contain('3');
+      expect($els.eq(5)).to.contain('5');
+    });
 
     // Индексы под кружками
-    cy.get('[cy-key="result-holder"]')
-      .children()
-      .within(($els) => {
-        expect($els).to.have.length(6);
-        expect($els.eq(0)).to.contain('0');
-        expect($els.eq(1)).to.contain('1');
-        expect($els.eq(2)).to.contain('2');
-        expect($els.eq(3)).to.contain('3');
-        expect($els.eq(4)).to.contain('4');
-        expect($els.eq(5)).to.contain('5');
-      });
+    circles.within(($els) => {
+      expect($els.eq(0)).to.contain('0');
+      expect($els.eq(1)).to.contain('1');
+      expect($els.eq(2)).to.contain('2');
+      expect($els.eq(3)).to.contain('3');
+      expect($els.eq(4)).to.contain('4');
+      expect($els.eq(5)).to.contain('5');
+    });
   });
 });

@@ -2,6 +2,8 @@ describe('E2E - тестирование Связанного списка', fun
   beforeEach(() => {
     cy.visit('http://localhost:3000');
     cy.get('a[href*="list"]').click();
+    cy.get('[id=value-input-field]').clear();
+    cy.get('[id=index-input-field]').clear();
   });
 
   it('Если в инпуте добавления числа пусто, то кнопки "Добавить в head" и "Добавить в tail" недоступны', () => {
@@ -26,21 +28,11 @@ describe('E2E - тестирование Связанного списка', fun
         expect($els.eq(0)).to.contain('head');
         expect($els.eq(3)).to.contain('tail');
 
-        cy.get($els.eq(0))
-          .get('[class^=circle_circle]')
-          .should('have.css', 'border-color', 'rgb(0, 50, 255)');
-
-        cy.get($els.eq(1))
-          .get('[class^=circle_circle]')
-          .should('have.css', 'border-color', 'rgb(0, 50, 255)');
-
-        cy.get($els.eq(2))
-          .get('[class^=circle_circle]')
-          .should('have.css', 'border-color', 'rgb(0, 50, 255)');
-
-        cy.get($els.eq(3))
-          .get('[class^=circle_circle]')
-          .should('have.css', 'border-color', 'rgb(0, 50, 255)');
+        $els.each(($el) => {
+          cy.wrap($el)
+            .get('[class^=circle_circle]')
+            .should('have.css', 'border-color', 'rgb(0, 50, 255)');
+        });
       });
   });
 

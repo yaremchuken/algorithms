@@ -4,6 +4,10 @@ describe('E2E - тестирование разворота строки', funct
     cy.get('a[href*="recursion"]').click();
   });
 
+  beforeEach(() => {
+    cy.get('input').clear();
+  });
+
   it('Если в инпуте пусто, то кнопка "Развернуть" недоступна', () => {
     cy.contains('Развернуть').should('be.disabled');
   });

@@ -1,5 +1,6 @@
 import React, { Component, FormEvent } from 'react';
 import { ElementStates } from '../../types/element-states';
+import { stringReverse } from '../../utils/utils';
 import { Button } from '../ui/button/button';
 import { Circle } from '../ui/circle/circle';
 import { Input } from '../ui/input/input';
@@ -53,7 +54,7 @@ class StringComponent extends Component<StringComponentProps, StringComponentSta
 
       const { input, startPointer, endPointer, changedIndexes } = this.state;
 
-      const reversed = this.reverseStep(input, changedIndexes, startPointer, endPointer);
+      const reversed = stringReverse(input, changedIndexes, startPointer, endPointer);
 
       this.setState(
         (state) => {
@@ -76,23 +77,6 @@ class StringComponent extends Component<StringComponentProps, StringComponentSta
         }
       );
     }, 1000);
-  };
-
-  reverseStep = (input: string, indexes: number[], firstPointer: number, secondPointer: number) => {
-    return {
-      input: this.rearrangeChars(input, firstPointer, secondPointer),
-      changedIndexes: [...indexes, firstPointer, secondPointer],
-      firstPointer: firstPointer + 1,
-      secondPointer: secondPointer - 1,
-    };
-  };
-
-  rearrangeChars = (str: string, first: number, second: number) => {
-    const arr = str.split('');
-    const tmp = arr[first];
-    arr[first] = arr[second];
-    arr[second] = tmp;
-    return arr.join('');
   };
 
   render(): React.ReactNode {

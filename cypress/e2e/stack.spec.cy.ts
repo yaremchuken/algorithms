@@ -2,6 +2,7 @@ describe('E2E - тестирование Стэка', function () {
   beforeEach(() => {
     cy.visit('http://localhost:3000');
     cy.get('a[href*="stack"]').click();
+    cy.get('input').clear();
   });
 
   it('Если в инпуте пусто, то кнопка "Добавить" недоступна', () => {
