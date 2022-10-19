@@ -1,4 +1,4 @@
-import { stringReverse } from '../../utils/utils';
+import { stringReverse } from './utils';
 
 describe('Корректность разворота строки', () => {
   it('С чётным количеством элементов', () => {

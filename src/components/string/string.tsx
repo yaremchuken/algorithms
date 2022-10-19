@@ -1,11 +1,11 @@
 import React, { Component, FormEvent } from 'react';
 import { ElementStates } from '../../types/element-states';
-import { stringReverse } from '../../utils/utils';
 import { Button } from '../ui/button/button';
 import { Circle } from '../ui/circle/circle';
 import { Input } from '../ui/input/input';
 import { SolutionLayout } from '../ui/solution-layout/solution-layout';
 import styles from './string.module.css';
+import { stringReverse } from './utils';
 
 interface StringComponentProps {}
 

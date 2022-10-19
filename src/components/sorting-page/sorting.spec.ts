@@ -1,4 +1,4 @@
-import { onBubbleSort, onChoiceSort } from '../../utils/utils';
+import { onBubbleSort, onChoiceSort } from './utils';
 
 describe('Корректность сортировки массива', () => {
   it('Сортировка Пузырьком - пустой массив', () => {

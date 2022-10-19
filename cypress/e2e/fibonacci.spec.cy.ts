@@ -16,12 +16,8 @@ describe('E2E - тестирование Фибоначчи', function () {
     const expectedValues = ['0', '1', '1', '2', '3', '5'];
     const expectedIndexes = ['0', '1', '2', '3', '4', '5'];
 
-    cy.clock();
-
     cy.get('input').type('5');
     cy.contains('Рассчитать').click();
-
-    cy.tick(3000);
 
     const circles = cy.get('[cy-key="result-holder"]').children();
 

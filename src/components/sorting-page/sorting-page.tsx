@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Direction } from '../../types/direction';
 import { ElementStates } from '../../types/element-states';
-import { onBubbleSort, onChoiceSort } from '../../utils/utils';
+import { onBubbleSort, onChoiceSort } from './utils';
 import { Button } from '../ui/button/button';
 import { Column } from '../ui/column/column';
 import { RadioInput } from '../ui/radio-input/radio-input';
